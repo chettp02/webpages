@@ -1,0 +1,398 @@
+<html lang="en">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      background: whitesmoke;
+    }
+  </style>
+
+  <head></head>
+
+  <body>
+    <!-- items center centers in the y, justify center centers in the x. flex lets you use both of these options -->
+    <!-- this is the home screen for the bird bingo game. you can select your player and click on the start game button -->
+    <div class="fixed inset-0 flex items-center justify-center" id="modalEl">
+      <div
+        class="max-w-md w-full h-20 p-6 text-center"
+        style="background-color: azure"
+      >
+        <!-- uncomment this out if you want the players to be able to choose their player name. do the same in birdbingo.js -->
+        <!-- <div>
+      <label
+        >Choose a player from this list:
+        <input
+          list="browsers"
+          name="myBrowser"
+          id="playerName"
+          onkeydown="return false"
+          autocomplete="off"
+      /></label>
+      <datalist id="browsers">
+        <option value="Chet"></option>
+        <option value="Cassie"></option>
+        <option value="Chad"></option>
+        <option value="DawnEtta"></option>
+        <option value="Michelle"></option>
+        <option value="Travis"></option>
+        <option value="Tavia"></option>
+        <option value="Aden"></option>
+        <option value="Ian"></option>
+        <option value="Kayla"></option>
+        <option value="Morgan"></option>
+      </datalist>
+    </div> -->
+        <div>
+          <button
+            class="bg-blue-500 text-white w-full py-3 rounded-full text-sm"
+            id="startGameBtn"
+            style="
+              position: absolute;
+              z-index: 1;
+              top: 50%;
+              left: 50%;
+              margin-top: -22px;
+              margin-left: -145px;
+              width: 300px;
+            "
+          >
+            Start Game
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- the header for the bingo card once you start the game -->
+    <div
+      class=""
+      id="bingoHeader"
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -270px;
+        margin-left: -130px;
+        display: none;
+      "
+    >
+      <h1 style="font-size: 200%">Portand Bird Bingo</h1>
+    </div>
+
+    <!-- user convenience buttons to reset their board selections or to get a new bingo board -->
+    <div>
+      <button
+        class="bg-green-500 text-white rounded-full w-20"
+        id="resetBtn"
+        style="
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-top: -300px;
+          margin-left: -120px;
+        "
+      >
+        Reset
+      </button>
+      <button
+        class="bg-green-500 text-white rounded-full w-40"
+        id="newBoardBtn"
+        style="
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-top: -300px;
+          margin-left: -35px;
+        "
+      >
+        New Board
+      </button>
+    </div>
+
+    <!-- modal that pops up to ask if the player is sure they want to get a new board -->
+    <div
+      id="modalNewBoard"
+      style="
+        z-index: 5;
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -75px;
+        margin-left: -118px;
+      "
+    >
+      <div
+        class="max-w-md w-full p-6 text-center"
+        style="background-color: azure"
+      >
+        <div>
+          <button
+            class="bg-blue-500 text-white w-full py-3 rounded-full text-sm my-2"
+            id="areYouSureBtn"
+            style="z-index: 5"
+          >
+            Click here if you're sure
+          </button>
+          <button
+            class="bg-red-500 text-white w-full py-3 rounded-full text-sm my-2"
+            id="newBoardCancelBtn"
+            style="z-index: 5"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- the images that is displayed in the middle of the bingo square -->
+    <img
+      width="80"
+      id="centerX"
+      src="theFam.jpg"
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -26px;
+        margin-left: -40px;
+        display: none;
+      "
+    />
+
+    <!-- modal that pops up when you've won the game -->
+    <div
+      id="modalBingo"
+      style="
+        z-index: 5;
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -75px;
+        margin-left: -225px;
+      "
+    >
+      <div
+        class="max-w-md w-full p-6 text-center"
+        style="background-color: azure"
+      >
+        <div>
+          <h1>
+            Bingo! Enjoy your rush of serotonin while everyone else stands by
+            jealous of your victory :D
+          </h1>
+          <button
+            class="bg-blue-500 text-white w-full py-3 rounded-full text-sm my-2"
+            id="newGameBtn"
+            style="z-index: 5"
+          >
+            New Game
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- This section of the code is for the display card that pops up when you click on the info button -->
+    <div
+      class="rounded bg-white"
+      id="displayCard"
+      style="
+        display: none;
+        z-index: 5;
+        position: absolute;
+        width: 500px;
+        height: 600px;
+        top: 50%;
+        left: 50%;
+        margin-top: -300px;
+        margin-left: -250px;
+      "
+    >
+      <img class="w-full" id="displayCardImg" src="theFam.jpg" />
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2 text-center" id="birdName">
+          Super Rare Bird
+        </div>
+        <p class="text-gray-700 text-base" id="birdDescription">
+          List all of the random info about the bird.
+        </p>
+      </div>
+      <div>
+        <button
+          id="displayCardLeftBtn"
+          style="
+            z-index: 2;
+            font-size: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -135px;
+            margin-left: -250px;
+            display: none;
+          "
+        >
+          &#8249;
+        </button>
+        <button
+          id="displayCardRightBtn"
+          style="
+            z-index: 2;
+            font-size: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -135px;
+            margin-left: 220px;
+            display: none;
+          "
+        >
+          &#8250;
+        </button>
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white fond-bold py-0.2 px-4 rounded"
+          id="displayCardSeenBtn"
+        >
+          Seen
+        </button>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white fond-bold py-0.2 px-4 rounded"
+          id="displayCardCloseBtn"
+          style="float: right"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- adds a check button, bingo square image, and info button to each of the bingo squares -->
+    <div style="display: none" id="mainBoardDisplay">
+      <button id="checkBtn0">&#10004;</button>
+      <div id="overlay0">Seen</div>
+      <img id="img0" />
+      <button id="infoBtn0">Info</button>
+
+      <button id="checkBtn1">&#10004;</button>
+      <div id="overlay1">Seen</div>
+      <img id="img1" />
+      <button id="infoBtn1">Info</button>
+
+      <button id="checkBtn2">&#10004;</button>
+      <div id="overlay2">Seen</div>
+      <img id="img2" />
+      <button id="infoBtn2">Info</button>
+
+      <button id="checkBtn3">&#10004;</button>
+      <div id="overlay3">Seen</div>
+      <img id="img3" />
+      <button id="infoBtn3">Info</button>
+
+      <button id="checkBtn4">&#10004;</button>
+      <div id="overlay4">Seen</div>
+      <img id="img4" />
+      <button id="infoBtn4">Info</button>
+
+      <button id="checkBtn5">&#10004;</button>
+      <div id="overlay5">Seen</div>
+      <img id="img5" />
+      <button id="infoBtn5">Info</button>
+
+      <button id="checkBtn6">&#10004;</button>
+      <div id="overlay6">Seen</div>
+      <img id="img6" />
+      <button id="infoBtn6">Info</button>
+
+      <button id="checkBtn7">&#10004;</button>
+      <div id="overlay7">Seen</div>
+      <img id="img7" />
+      <button id="infoBtn7">Info</button>
+
+      <button id="checkBtn8">&#10004;</button>
+      <div id="overlay8">Seen</div>
+      <img id="img8" />
+      <button id="infoBtn8">Info</button>
+
+      <button id="checkBtn9">&#10004;</button>
+      <div id="overlay9">Seen</div>
+      <img id="img9" />
+      <button id="infoBtn9">Info</button>
+
+      <button id="checkBtn10">&#10004;</button>
+      <div id="overlay10">Seen</div>
+      <img id="img10" />
+      <button id="infoBtn10">Info</button>
+
+      <button id="checkBtn11">&#10004;</button>
+      <div id="overlay11">Seen</div>
+      <img id="img11" />
+      <button id="infoBtn11">Info</button>
+
+      <button id="checkBtn12">&#10004;</button>
+      <div id="overlay12">Seen</div>
+      <img id="img12" />
+      <button id="infoBtn12">Info</button>
+
+      <button id="checkBtn13">&#10004;</button>
+      <div id="overlay13">Seen</div>
+      <img id="img13" />
+      <button id="infoBtn13">Info</button>
+
+      <button id="checkBtn14">&#10004;</button>
+      <div id="overlay14">Seen</div>
+      <img id="img14" />
+      <button id="infoBtn14">Info</button>
+
+      <button id="checkBtn15">&#10004;</button>
+      <div id="overlay15">Seen</div>
+      <img id="img15" />
+      <button id="infoBtn15">Info</button>
+
+      <button id="checkBtn16">&#10004;</button>
+      <div id="overlay16">Seen</div>
+      <img id="img16" />
+      <button id="infoBtn16">Info</button>
+
+      <button id="checkBtn17">&#10004;</button>
+      <div id="overlay17">Seen</div>
+      <img id="img17" />
+      <button id="infoBtn17">Info</button>
+
+      <button id="checkBtn18">&#10004;</button>
+      <div id="overlay18">Seen</div>
+      <img id="img18" />
+      <button id="infoBtn18">Info</button>
+
+      <button id="checkBtn19">&#10004;</button>
+      <div id="overlay19">Seen</div>
+      <img id="img19" />
+      <button id="infoBtn19">Info</button>
+
+      <button id="checkBtn20">&#10004;</button>
+      <div id="overlay20">Seen</div>
+      <img id="img20" />
+      <button id="infoBtn20">Info</button>
+
+      <button id="checkBtn21">&#10004;</button>
+      <div id="overlay21">Seen</div>
+      <img id="img21" />
+      <button id="infoBtn21">Info</button>
+
+      <button id="checkBtn22">&#10004;</button>
+      <div id="overlay22">Seen</div>
+      <img id="img22" />
+      <button id="infoBtn22">Info</button>
+
+      <button id="checkBtn23">&#10004;</button>
+      <div id="overlay23">Seen</div>
+      <img id="img23" />
+      <button id="infoBtn23">Info</button>
+    </div>
+  </body>
+
+  <!-- adds the BirdBingo.js script to the html file so that it is running in the background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <script type="module" src="./index.js"></script>
+</html>
