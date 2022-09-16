@@ -1,0 +1,9 @@
+.img-container img {
+  width: 30vw;
+}
+
+.main-container-about-me {
+  background-color: rgb(223, 223, 223);
+  padding: 1rem;
+  height: 75vh;
+}
